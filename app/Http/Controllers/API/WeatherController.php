@@ -9,7 +9,7 @@ class WeatherController extends Controller
     protected $apiKey;
     public function __construct()
     {
-        $this ->apiKey = config('');
+        $this ->apiKey = config('services.openweathermap.key');
     }
     // getting current weather
     public function getWeather(Request $request)

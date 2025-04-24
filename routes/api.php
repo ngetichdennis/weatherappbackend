@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+use App\Http\Controllers\API\WeatherController;
+
+Route::get('/weather', [WeatherController::class, 'getWeather']);
+Route::get('/forecast', [WeatherController::class, 'getForecast']);
+Route::get('/search-city', [WeatherController::class, 'searchCity']);
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
