@@ -108,4 +108,10 @@ class WeatherController extends Controller
         $data = $response->json()[0];
         return [$data['lat'],$data['lon']];
     }
+    // helpers for converting wind direction to compass direction
+    private function convertDegreesToDirection($deg)
+    {
+        $dirs=['N','NE','E','SE', 'S', 'SW', 'W', 'NW'];
+        return $dirs[round($deg/45)%8];
+    }
 }
