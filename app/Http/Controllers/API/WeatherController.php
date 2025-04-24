@@ -94,4 +94,18 @@ class WeatherController extends Controller
             'lon' => $data['lon'],
         ]);
     }
+    // helpers for getting coordinates from city
+    private function getCoordinates($city)
+    {
+        $response = Http::get("http://api.openweathermap.org/geo/1.0/direct",[
+            'q'=>$city,
+            'limit'=>1,
+            'appid'=>$this->apiKey,
+        ]);
+        if ($response ->failed()|| empty($response->json())){
+            return null;
+        }
+        $data = $response->json()[0];
+        return [$data['lat'],$data['lon']];
+    }
 }
