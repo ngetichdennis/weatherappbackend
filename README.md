@@ -1,67 +1,116 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Weather App Backend
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is the backend for the weather application built with **Laravel**. It provides an API to fetch real-time weather data, 3-day weather forecasts, and search functionality for cities using the **OpenWeatherMap API**.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Current Weather**: Fetches current weather data for a given city, including temperature, weather condition, wind speed, direction, and humidity.
+- **3-Day Forecast**: Fetches the 3-day weather forecast for a given city.
+- **Search City**: Allows searching for a city by name
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Technologies Used
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Laravel**: PHP framework for backend development.
+- **OpenWeatherMap API**: Used to fetch weather data.
+- **HTTP Client (Laravel)**: Used for making HTTP requests to external services.
 
-## Learning Laravel
+## Requirements
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- PHP >= 7.4
+- Composer
+- Laravel >= 8.x
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. Clone the Repository
 
-## Laravel Sponsors
+Clone the backend repository to your local machine:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+git clone git@github.com:ngetichdennis/weatherappbackend.git
+cd weather-backend
+2. Install Dependencies
+Install the required dependencies using Composer:
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+composer install
+3. Set Up Environment File
 
-## Contributing
+cp .env.example .env
+4. Configure the API Key
+You will need to obtain an API key from OpenWeatherMap. Once you have it, add the API key to your .env file:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+OPENWEATHERMAP_API_KEY=your_api_key_here
 
-## Code of Conduct
+5. Run the Laravel Development Server
+Run the application locally:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+php artisan serve
+The backend should now be running at http://127.0.0.1:8000.
 
-## Security Vulnerabilities
+API Routes
+The backend exposes the following routes:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Get Current Weather
+GET /api/weather?city={city}&units={units}
 
-## License
+city: The name of the city you want to fetch the weather for (e.g., "Nairobi").
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# weatherappbackend
+units: The unit of temperature (either metric for Celsius or imperial for Fahrenheit). Default is metric.
+
+Response Example:
+
+{
+  "city": "Nairobi",
+  "temperature": 23,
+  "weather": "Clouds",
+  "icon": "04d",
+  "date": "25th April 2025",
+  "wind_speed": 3.97,
+  "wind_direction": "E",
+  "humidity": 54
+}
+2. Get 3-Day Weather Forecast
+GET /api/forecast?city={city}&units={units}
+
+city: The name of the city you want to fetch the weather forecast for.
+
+units: The unit of temperature (metric for Celsius or imperial for Fahrenheit).
+
+Response Example:
+
+[
+  {
+    "date": "2025-04-25",
+    "min_temp": 22.1,
+    "max_temp": 26.3,
+    "icon": "04d",
+    "description": "Clouds"
+  },
+  {
+    "date": "2025-04-26",
+    "min_temp": 21.5,
+    "max_temp": 27.2,
+    "icon": "04d",
+    "description": "Clouds"
+  },
+  {
+    "date": "2025-04-27",
+    "min_temp": 20.8,
+    "max_temp": 28.0,
+    "icon": "01d",
+    "description": "Clear"
+  }
+]
+3. Search City
+GET /api/search-city?city={city}
+
+city: The name of the city to search for.
+
+Response Example:
+
+{
+  "city": "Nairobi",
+  "lat": -1.286389,
+  "lon": 36.817223
+}
